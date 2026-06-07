@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1e1e38" />
+      <stop offset="100%" stop-color="#0a0a16" />
+    </radialGradient>
+    
+    <!-- Neon Accent Gradients -->
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8" />
+      <stop offset="50%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+    
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a5b4fc" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Subtle Drop Shadows -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Maskable area safe zone background (rounded icon base) -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+
+  <!-- Outer Hexagonal Tech Ring -->
+  <polygon points="256,40 440,146 440,366 256,472 72,366 72,146" 
+           fill="none" 
+           stroke="url(#accentGrad)" 
+           stroke-width="8" 
+           stroke-opacity="0.3" 
+           stroke-dasharray="16 12" />
+
+  <!-- Inner Glowing Hexagon -->
+  <polygon points="256,80 405,166 405,346 256,432 107,346 107,166" 
+           fill="none" 
+           stroke="url(#primaryGrad)" 
+           stroke-width="12" 
+           filter="url(#neonGlow)" />
+
+  <!-- Center Workspace "P" + "W" Layered Ribbon Graph Shape -->
+  <!-- Layer 1 (Left Wing / Fold) -->
+  <path d="M190 180 L256 140 L322 180 L322 332 L256 372 L190 332 Z" 
+        fill="url(#primaryGrad)" 
+        opacity="0.15" />
+
+  <!-- Layer 2 (Active Diagonal Bars representing data, progressive growth, or building blocks) -->
+  <rect x="240" y="190" width="32" height="130" rx="16" fill="url(#primaryGrad)" filter="url(#neonGlow)" />
+  <rect x="190" y="230" width="32" height="90" rx="16" fill="url(#accentGrad)" />
+  <rect x="290" y="210" width="32" height="110" rx="16" fill="url(#primaryGrad)" />
+
+  <!-- Speed Ring / Orbiting Node -->
+  <circle cx="256" cy="140" r="16" fill="#ffffff" filter="url(#neonGlow)" />
+  <circle cx="256" cy="140" r="8" fill="#38bdf8" />
+  
+  <!-- Glowing Horizontal Support line representing stability / platform -->
+  <line x1="150" y1="360" x2="362" y2="360" stroke="url(#accentGrad)" stroke-width="6" stroke-linecap="round" filter="url(#neonGlow)" />
+</svg>

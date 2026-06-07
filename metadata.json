@@ -1,0 +1,6 @@
+{
+  "name": "PWA Studio",
+  "description": "Progressive Web App (PWA) with full browser installation support, offline capability, storage inspection, notes, and task workspace.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
