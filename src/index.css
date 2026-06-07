@@ -1,1 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Syne", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-green-neon: #00FF66;
+  --color-dark-surface: #0F1115;
+  --color-zinc-card: #16181D;
+}

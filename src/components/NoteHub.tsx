@@ -9,11 +9,11 @@ interface NoteHubProps {
 }
 
 const NOTE_COLORS = [
-  { name: 'Индиго', value: 'border-l-indigo-500 bg-indigo-500/5', colorHex: '#6366f1' },
-  { name: 'Бирюзовый', value: 'border-l-cyan-500 bg-cyan-500/5', colorHex: '#06b6d4' },
-  { name: 'Изумрудный', value: 'border-l-emerald-500 bg-emerald-500/5', colorHex: '#10b981' },
-  { name: 'Оранжевый', value: 'border-l-amber-500 bg-amber-500/5', colorHex: '#f59e0b' },
-  { name: 'Коралловый', value: 'border-l-rose-500 bg-rose-500/5', colorHex: '#f43f5e' }
+  { name: 'Неон', value: 'border-l-green-neon bg-green-neon/5', colorHex: '#00FF66' },
+  { name: 'Бирюзовый', value: 'border-l-cyan-400 bg-cyan-400/5', colorHex: '#22D3EE' },
+  { name: 'Розовый', value: 'border-l-rose-500 bg-rose-500/5', colorHex: '#F43F5E' },
+  { name: 'Золотой', value: 'border-l-amber-400 bg-amber-400/5', colorHex: '#FBBF24' },
+  { name: 'Пурпурный', value: 'border-l-fuchsia-500 bg-fuchsia-500/5', colorHex: '#D946EF' }
 ];
 
 export default function NoteHub({ notes, onNotesChange }: NoteHubProps) {
@@ -92,21 +92,20 @@ export default function NoteHub({ notes, onNotesChange }: NoteHubProps) {
   const characterCount = content ? content.length : 0;
 
   return (
-    <div id="pwa-notes-workspace" className="bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 border border-slate-800 shadow-xl overflow-hidden relative">
-      <div className="absolute -bottom-16 -right-16 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
-
+    <div id="pwa-notes-workspace" className="bg-zinc-card p-6 border border-zinc-800 shadow-[4px_4px_0px_#000000] overflow-hidden relative rounded-none text-left">
+      
       {/* Header */}
-      <div className="flex justify-between items-center pb-4 mb-5 border-b border-slate-800">
+      <div className="flex justify-between items-start sm:items-center pb-4 mb-5 border-b border-zinc-800 flex-wrap gap-4">
         <div>
-          <h2 className="font-sans font-semibold text-slate-100 tracking-tight text-lg flex items-center gap-2">
-            <Feather className="w-5 h-5 text-indigo-400" />
+          <h2 className="font-display font-black text-lg text-white uppercase italic tracking-tight flex items-center gap-2">
+            <Feather className="w-5 h-5 text-green-neon" />
             Блокнот Быстрых Заметок
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">Все заметки работают оффлайн и сохраняются на лету.</p>
+          <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mt-1">Офлайн автосохранение локального стека</p>
         </div>
         <button
           onClick={handleCreateNote}
-          className="flex items-center gap-1 px-3 py-1.5 bg-indigo-500 hover:bg-indigo-600 active:scale-95 text-white text-xs font-semibold rounded-lg shadow-md hover:shadow-indigo-500/10 transition-all cursor-pointer"
+          className="flex items-center gap-1.5 px-4 py-2 bg-green-neon hover:bg-white text-black hover:text-black text-[10px] font-black uppercase tracking-widest transition-none cursor-pointer rounded-none border-none shadow-[2px_2px_0px_#ffffff] active:translate-y-0.5"
         >
           <Plus className="w-4 h-4" />
           Создать
@@ -115,21 +114,21 @@ export default function NoteHub({ notes, onNotesChange }: NoteHubProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
         {/* Notes list: 5 columns */}
-        <div className="md:col-span-5 space-y-3 flex flex-col">
+        <div className="md:col-span-12 lg:col-span-5 space-y-3 flex flex-col">
           {/* Search Bar */}
           <div className="relative">
-            <Search className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-2.5" />
+            <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
             <input
               type="text"
-              placeholder="Поиск по заметкам..."
+              placeholder="ПОИСК ЗАМЕТОК..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-slate-950/50 border border-slate-800/80 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-300 outline-none focus:border-indigo-500 transition-all placeholder:text-slate-600"
+              className="w-full bg-black border-2 border-zinc-900 rounded-none pl-10 pr-3 py-2.5 text-xs text-white uppercase tracking-wider font-bold outline-none focus:border-green-neon transition-all placeholder:text-zinc-500"
             />
           </div>
 
           {/* List scroll block */}
-          <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+          <div className="space-y-2.5 max-h-[300px] overflow-y-auto pr-1">
             <AnimatePresence initial={false}>
               {filteredNotes.length > 0 ? (
                 filteredNotes.map((note) => {
@@ -149,28 +148,28 @@ export default function NoteHub({ notes, onNotesChange }: NoteHubProps) {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       onClick={() => handleSelectNote(note)}
-                      className={`p-3.5 rounded-xl border-l-4 border-y border-r border-slate-800 cursor-pointer text-left transition-all ${
+                      className={`p-3.5 border-l-4 border-y border-r border-zinc-800 cursor-pointer text-left rounded-none transition-none ${
                         isActive 
-                          ? 'bg-slate-950/60 border-slate-700/80 ring-1 ring-indigo-500/10' 
-                          : 'bg-slate-950/20 hover:bg-slate-950/40'
+                          ? 'bg-black border-zinc-700' 
+                          : 'bg-zinc-900/40 hover:bg-zinc-900/70 border-zinc-900'
                       } ${note.color}`}
                     >
                       <div className="flex justify-between items-start gap-2">
-                        <span className="text-xs font-semibold text-slate-200 truncate flex-1 leading-snug">
+                        <span className="text-xs font-black text-white hover:text-green-neon transition-colors truncate flex-1 leading-snug">
                           {note.title}
                         </span>
-                        <span className="text-[10px] font-mono text-slate-500 shrink-0">
+                        <span className="text-[9px] font-mono font-bold text-zinc-500 tracking-wider shrink-0 uppercase">
                           {dateStr}
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-400 mt-1 lines-clamp-2 leading-relaxed">
+                      <p className="text-[11px] text-zinc-400 mt-1.5 lines-clamp-2 leading-relaxed">
                         {preview}
                       </p>
                       
-                      <div className="flex justify-end gap-1.5 mt-2 pt-2 border-t border-slate-900/40">
+                      <div className="flex justify-end gap-1.5 mt-2.5 pt-2 border-t border-zinc-800/50">
                         <button
                           onClick={(e) => handleDeleteNote(note.id, e)}
-                          className="p-1 hover:bg-slate-900 rounded text-slate-600 hover:text-rose-400 transition-colors"
+                          className="p-1.5 bg-black hover:bg-rose-950/30 border border-zinc-800 text-zinc-500 hover:text-rose-400 hover:border-rose-400 transition-colors"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -179,7 +178,7 @@ export default function NoteHub({ notes, onNotesChange }: NoteHubProps) {
                   );
                 })
               ) : (
-                <div className="py-12 text-center text-slate-600 text-xs">
+                <div className="py-12 bg-black border border-zinc-800/50 text-center text-zinc-500 text-[10px] uppercase tracking-wider font-bold">
                   Заметок не найдено
                 </div>
               )}
@@ -187,76 +186,76 @@ export default function NoteHub({ notes, onNotesChange }: NoteHubProps) {
           </div>
         </div>
 
-        {/* Editor: 7 columns */}
-        <div className="md:col-span-7 bg-slate-950/40 p-4 rounded-xl border border-slate-800/80 flex flex-col justify-between min-h-[300px]">
+        {/* Editor: 7 columns (or 12 on small layouts) */}
+        <div className="md:col-span-12 lg:col-span-7 bg-black p-5 border-2 border-zinc-900 flex flex-col justify-between min-h-[300px] rounded-none">
           {isEditing && activeNoteId ? (
             <div className="space-y-4 flex-1 flex flex-col justify-between">
-              <div className="space-y-3.5 flex-1 flex flex-col">
+              <div className="space-y-4 flex-1 flex flex-col">
                 {/* Note Title Input */}
                 <input
                   type="text"
-                  placeholder="Заголовок..."
+                  placeholder="ЗАГОЛОВОК..."
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="bg-transparent border-b border-slate-800/80 focus:border-indigo-500/40 text-sm font-semibold text-slate-100 placeholder:text-slate-600 outline-none pb-2 w-full transition-all"
+                  className="bg-transparent border-b-2 border-zinc-900 focus:border-green-neon text-sm font-black text-white uppercase tracking-wider placeholder:text-zinc-600 outline-none pb-2 w-full transition-all"
                 />
 
                 {/* Color Selection row */}
-                <div className="flex flex-wrap items-center gap-1.5 py-1">
-                  <span className="text-[10px] font-mono text-slate-500 mr-1 block">Метка:</span>
+                <div className="flex flex-wrap items-center gap-2 py-1">
+                  <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-black mr-1 block">Метка:</span>
                   {NOTE_COLORS.map((c) => (
                     <button
                       key={c.value}
                       type="button"
                       onClick={() => setColorClass(c.value)}
-                      className={`w-4 h-4 rounded-full transition-transform cursor-pointer flex items-center justify-center border border-slate-900 ${
-                        colorClass === c.value ? 'scale-125 border-slate-300' : 'hover:scale-110'
+                      className={`w-5 h-5 rounded-none transition-transform cursor-pointer flex items-center justify-center border-2 ${
+                        colorClass === c.value ? 'scale-110 border-white' : 'border-black hover:border-zinc-700'
                       }`}
                       style={{ backgroundColor: c.colorHex }}
                       title={c.name}
                     >
-                      {colorClass === c.value && <Check className="w-2.5 h-2.5 text-white stroke-[3]" />}
+                      {colorClass === c.value && <Check className="w-3.5 h-3.5 text-black stroke-[4]" />}
                     </button>
                   ))}
                 </div>
 
                 {/* Content Editor */}
                 <textarea
-                  placeholder="Напишите что-нибудь важное..."
+                  placeholder="Напишите важное примечание или код..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  className="w-full bg-transparent text-xs text-slate-300 placeholder:text-slate-700 outline-none resize-none leading-relaxed flex-1 min-h-[150px]"
+                  className="w-full bg-transparent text-xs text-zinc-300 placeholder:text-zinc-700 outline-none resize-none leading-relaxed flex-1 min-h-[150px] font-mono"
                 />
               </div>
 
               {/* Status and Action Buttons */}
-              <div className="flex justify-between items-center pt-3 border-t border-slate-900/60 flex-wrap gap-2">
-                <span className="text-[10px] font-mono text-slate-500">
-                  {wordCount} слов • {characterCount} символов
+              <div className="flex justify-between items-center pt-3.5 border-t border-zinc-900 flex-wrap gap-2 text-left">
+                <span className="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-widest">
+                  {wordCount} ВЫРАЖЕНИЙ • {characterCount} БАЙТ
                 </span>
                 <div className="flex gap-2">
                   <button
                     onClick={() => setIsEditing(false)}
-                    className="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-slate-400 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+                    className="px-3.5 py-2 bg-zinc-900 hover:bg-zinc-850 hover:text-white text-zinc-400 text-[9px] font-black uppercase tracking-widest transition-none cursor-pointer rounded-none border border-zinc-800"
                   >
                     Отмена
                   </button>
                   <button
                     onClick={handleSaveActiveNote}
-                    className="px-3.5 py-1 bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+                    className="px-4 py-2 bg-green-neon hover:bg-white text-black hover:text-black text-[9px] font-black uppercase tracking-widest transition-none flex items-center gap-1.5 cursor-pointer rounded-none border-none shadow-[2px_2px_0px_#ffffff] active:translate-y-0.5"
                   >
-                    <Check className="w-3.5 h-3.5" />
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
                     Сохранить
                   </button>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-center p-6 text-slate-500">
-              <FileText className="w-10 h-10 text-slate-700 mb-3" />
-              <p className="text-xs font-semibold text-slate-400">Редактор заметок</p>
-              <p className="text-[11px] text-slate-500 max-w-[200px] mt-1">
-                Выберите заметку из списка слева для просмотра или создайте совершенно новую в 1 клик.
+            <div className="flex-1 flex flex-col items-center justify-center text-center p-6 text-zinc-600">
+              <FileText className="w-10 h-10 text-zinc-800 mb-3" />
+              <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Редактор заметок</p>
+              <p className="text-[11px] text-zinc-500 max-w-[200px] mt-1.5 leading-relaxed font-semibold">
+                Выберите заметку из списка слева для просмотра или создайте совершенно новую в один клик.
               </p>
             </div>
           )}
